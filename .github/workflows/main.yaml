@@ -12,5 +12,5 @@ jobs:
       - run: npm install -g bats
       - run: bats -v
 
-    job:
+job:
     run: npm install -g vue3
