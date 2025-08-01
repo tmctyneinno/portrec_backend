@@ -35,6 +35,7 @@ class JobOpeningRequest extends FormRequest
             'required_skills' => 'required|string',
             'min_salary' => 'nullable|string',
             'job_url' => 'nullable|string',
+            'job_email' => 'nullable|string',
             'max_salary' => 'nullable|string',
             'deadline' => 'nullable',
             'qualifications' => 'nullable|string|max:255',

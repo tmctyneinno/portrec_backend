@@ -66,6 +66,7 @@ class JobController extends BaseController
                 ]));
             }
         }
+
         return response()->json($jobOpening, 201);
     }
 
