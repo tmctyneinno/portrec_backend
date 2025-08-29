@@ -30,6 +30,7 @@ class JobOpeningRequest extends FormRequest
             'job_function_id' => 'nullable|integer|exists:job_functions,id',
             'industry_id' => 'required|integer|exists:industries,id',
             'job_type_id' => 'required',
+            'job_mode_id' => 'required',
             'title' => 'required|string',
             'description' => 'required|string',
             'required_skills' => 'required|string',

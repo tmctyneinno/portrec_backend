@@ -16,6 +16,7 @@ class JobOpening extends Model
         'country_id',
         'job_function_id',
         'job_type_id',
+        'job_mode_id',
         'title',
         'description',
         'required_skills',
@@ -48,6 +49,11 @@ class JobOpening extends Model
     public function jobType()
     {
         return $this->belongsTo(JobType::class, "job_type_id", "id");
+    }
+
+    public function jobMode()
+    {
+        return $this->belongsTo(JobType::class, "job_mode_id", "id");
     }
 
     public function company()

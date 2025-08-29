@@ -11,6 +11,7 @@ use App\Models\JobLevel;
 use App\Models\JobOpening;
 use App\Models\JobType;
 use App\Models\FileUploadPath;
+use App\Models\JobMode;
 use App\Models\Qualification;
 use App\Models\Skill;
 use Illuminate\Http\Request;
@@ -32,11 +33,11 @@ class JobController extends BaseController
 
     public function showJobs(Request $request, $type = null, $id = null)
     {
-
         $query = JobOpening::with(["recruiter:id,name,email,phone", "company", "jobType", "industry", "level", "currency"]);
 
         if (!$type) {
             $jobType = $request->get("type_id");
+            // $jobMode = $request->get("mode_id");
             $industry = $request->get("industry_id");
             $level = $request->get("level_id");
             $min = $request->get("min_salary");
@@ -47,6 +48,7 @@ class JobController extends BaseController
             }
 
             $this->filter($query, "jobType", $jobType);
+            // $this->filter($query, "jobMode", $jobMode);
             $this->filter($query, "industry", $industry);
             $this->filter($query, "level", $level);
 
@@ -166,6 +168,20 @@ class JobController extends BaseController
         $jobs = $jobTypes->jobs()->paginate(10);
         return $this->successMessage([
             "type" => $jobTypes,
+            "jobs" => $jobs
+        ]);
+    }
+
+    public function jobModes($id = null)
+    {
+        if (!$id) {
+            $jobModes = JobMode::withCount($this->jc)->get();
+            return $this->successMessage($jobModes);
+        }
+        $jobModes = JobMode::findorfail($id);
+        $jobs = $jobModes->jobs()->paginate(10);
+        return $this->successMessage([
+            "modes" => $jobModes,
             "jobs" => $jobs
         ]);
     }

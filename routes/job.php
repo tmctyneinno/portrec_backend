@@ -23,6 +23,7 @@ Route::controller(JobController::class)->prefix('job')->group(function () {
     Route::get("industries/{id?}",  "jobIndustries");
     Route::get("skills/{id?}",  "jobSkills");
     Route::get("types/{id?}",  "jobTypes");
+    Route::get("modes/{id?}",  "jobModes");
     Route::get("levels/{id?}", "jobLevels");
     Route::get("functions/{id?}",  "jobFunctions");
     Route::get("currencies",  "getCountryCurrencies");
