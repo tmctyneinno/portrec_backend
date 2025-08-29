@@ -13,15 +13,18 @@ return new class extends Migration
     public function up(): void
     {
         if (Schema::hasTable('job_types')) {
+
             DB::table("job_types")->truncate();
 
             $data = [
                 ["name" => "full-time"],
                 ["name" => "part-time"],
                 ["name" => "remote"],
-                // ["name" => "internship"],
-                // ["name" => "contract"],
+                ["name" => "internship"],
+                ["name" => "contract"],
+                ["name" => "volunteer"],
             ];
+
             DB::table("job_types")->insert($data);
         }
     }

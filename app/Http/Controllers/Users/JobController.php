@@ -33,7 +33,7 @@ class JobController extends BaseController
 
     public function showJobs(Request $request, $type = null, $id = null)
     {
-        $query = JobOpening::with(["recruiter:id,name,email,phone", "company", "jobType", "industry", "level", "currency"]);
+        $query = JobOpening::with(["recruiter:id,name,email,phone", "company", "jobType", "jobMode", "industry", "level", "currency"]);
 
         if (!$type) {
             $jobType = $request->get("type_id");
@@ -204,7 +204,7 @@ class JobController extends BaseController
     public function jobDetails(Request $request, $id)
     {
         // return $this->successMessage(AUTH::id());
-        $job = JobOpening::where("id", $id)->with(["questions", "industry", "jobType", "company", "currency"])->first();
+        $job = JobOpening::where("id", $id)->with(["questions", "industry", "jobType", "jobMode", "company", "currency"])->first();
         $job->applications = JobApplication::where('job_opening_id', $id)->pluck('user_id');
 
         $avatar = FileUploadPath::find($job?->company?->image);

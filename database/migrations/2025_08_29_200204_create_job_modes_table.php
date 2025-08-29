@@ -23,11 +23,9 @@ return new class extends Migration
             });
 
             $data = [
-                ["name" => "internship"],
-                ["name" => "contract"],
+                ["name" => "remote"],
                 ["name" => "hybrid"],
-                ["name" => "volunteer"],
-
+                ["name" => "on-site"],
             ];
 
             DB::table("job_modes")->insert($data);
