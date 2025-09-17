@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserAuthController extends AuthController
 {
@@ -110,7 +112,17 @@ class UserAuthController extends AuthController
         $user = User::where('email', $validated['email'])->first();
 
         if (!$user) {
-            return $this->errorMessage('This email is not registered, Please sign up first', 401);
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'role' => 'user',
+                'password' => Hash::make(Str::random((16))),
+            ]);
+
+            UserProfile::create([
+                'user_id' => $user->id,
+                'industries_id' => $request->industry_id ?? null,
+            ]);
         }
 
         $token = $user->createToken("portrecToken")->plainTextToken;

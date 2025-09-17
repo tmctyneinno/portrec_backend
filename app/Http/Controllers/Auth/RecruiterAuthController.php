@@ -12,7 +12,9 @@ use App\Models\RecruiterProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RecruiterAuthController extends AuthController
 {
@@ -101,7 +103,23 @@ class RecruiterAuthController extends AuthController
         $recruiter = Recruiter::where('email', $validated['email'])->first();
 
         if (!$recruiter) {
-            return $this->errorMessage('This email is not registered, Please sign up first', 401);
+
+            $recruiter = Recruiter::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'phone' => '080',
+                'password' => Hash::make(Str::random((16))),
+            ]);
+
+
+            // create company
+            $newCompany = Company::create(['name' => $validated['name']]);
+
+            // create recruiter_profile
+            RecruiterProfile::create([
+                'recruiter_id' => $recruiter->id,
+                'company_id' => $newCompany->id,
+            ]);
         }
 
         $token = $recruiter->createToken("recruiterPortreToken")->plainTextToken;

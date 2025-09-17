@@ -15,7 +15,7 @@ use App\Http\Controllers\Recruiters\{
 Route::prefix("recruiter")->group(function () {
     Route::post("signup", [RecruiterAuthController::class, "signup"]);
     Route::post("login", [RecruiterAuthController::class, "signin"]);
-    // Route::post("login-google", [RecruiterAuthController::class, "signinWithGoogle"])->name('signinWithGoogle');
+    Route::post("login-google", [RecruiterAuthController::class, "signinWithGoogle"])->name('signinWithGoogle');
 
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get("profile", [ProfileController::class, "myProfile"]);
