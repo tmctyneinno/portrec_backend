@@ -35,6 +35,11 @@ class JobController extends BaseController
     {
         $query = JobOpening::with(["recruiter:id,name,email,phone", "company", "jobType", "jobMode", "industry", "level", "currency"]);
 
+        // filter out jobs whose deadline is more than 3 months from now
+        $query->where(function ($q) {
+            $q->whereBetween('deadline', [now()->subMonths(3), now()]);
+        });
+
         if (!$type) {
             $jobType = $request->get("type_id");
             // $jobMode = $request->get("mode_id");
